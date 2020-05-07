@@ -223,7 +223,7 @@ inputSearch.addEventListener('keydown', function(event) {
         const products = data.map(function(item) {
           return item.products;
     });
-        produ.forEach(function(product){
+        products.forEach(function(product){
           getData('./db/${product]')
           .then(function(data){
           goods.push(...data)
