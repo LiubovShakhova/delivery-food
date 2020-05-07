@@ -166,12 +166,11 @@ function createCardGood({ description, id, image, name, price }) {
 
 function openGoods(event) {
     const target = event.target;
+    const restaurant = target.closest('.card-restaurant');
 
-    if (login) {
+    if (restaurant) {
 
-      const restaurant = target.closest('.card-restaurant');
-      
-      if (restaurant) {
+      if (login) {
       console.log(restaurant.dataset.products);
       
       const info = restaurant.dataset.info.split(',');
