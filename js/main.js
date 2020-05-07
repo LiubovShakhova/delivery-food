@@ -116,7 +116,7 @@ function createCardRestaurant({ image,
     const card = `
       <a class="card card-restaurant" 
         data-products="${products}"
-        data-info="${[name, price, stars, kitchen]}"
+        data-info="${[ name, price, stars, kitchen ]}"
         >
               <img src="${image}" alt="image" class="card-image"/>
               <div class="card-text">
@@ -171,7 +171,6 @@ function openGoods(event) {
     if (restaurant) {
 
       if (login) {
-      console.log(restaurant.dataset.products);
       
       const info = restaurant.dataset.info.split(',');
       const [ name, price, stars, kitchen ] = info;
@@ -180,7 +179,7 @@ function openGoods(event) {
       containerPromo.classList.add('hide');
       restaurants.classList.add('hide');
 
-      restaurantTitle.textContent = nameReg;
+      restaurantTitle.textContent = name;
       rating.textContent = stars;
       minPrice.textContent = `Ot ${price} P`;
       category.textContent = kitchen;
