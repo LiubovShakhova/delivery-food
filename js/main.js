@@ -16,13 +16,17 @@ const restaurants = document.querySelector('.restaurants');
 const menu = document.querySelector('.menu');
 const logo = document.querySelector('.logo');
 const cardsMenu = document.querySelector('.cards-menu');
+const restaurantTitle = document.querySelector('.restaurant-title');
+const rating = document.querySelector('.rating');
+const minPrice = document.querySelector('.price');
+const category = document.querySelector('.category');
 
 let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
 //console.log(modalAuth.classList.contains('hello'))
 //modalAuth.classList.remove('modal-auth')
 const getData = async function(url) {
-    const response = await fetch(url);
+    const response = await window.fetch(url);
 
     if (!response.ok) {
       throw new Error(`Fehler ${url}, Status ${response.status}!`);
@@ -110,7 +114,10 @@ function createCardRestaurant({ image,
   products,time_of_delivery }) {
 
     const card = `
-      <a class="card card-restaurant" data-products="${products}">
+      <a class="card card-restaurant" 
+        data-products="${products}"
+        data-info="${[name, price, stars, kitchen]}"
+        >
               <img src="${image}" alt="image" class="card-image"/>
               <div class="card-text">
                 <div class="card-heading">
@@ -135,7 +142,7 @@ function createCardGood({ description, id, image, name, price }) {
   const card = document.createElement('div');
   card.className = 'card';
   card.insertAdjacentHTML('beforeend', `
-        <img src="${image}" alt="image" class="card-image"/>
+        <img src="${image}" alt="${name}" class="card-image"/>
         <div class="card-text">
           <div class="card-heading">
                   <h3 class="card-title card-title-reg">${name}</h3>
@@ -159,16 +166,26 @@ function createCardGood({ description, id, image, name, price }) {
 
 function openGoods(event) {
     const target = event.target;
-    const restaurant = target.closest('.card-restaurant');
-    
-    if (restaurant) {
 
-      if (login) {
+    if (login) {
+
+      const restaurant = target.closest('.card-restaurant');
+      
+      if (restaurant) {
       console.log(restaurant.dataset.products);
       
+      const info = restaurant.dataset.info.split(',');
+      const [ name, price, stars, kitchen ] = info;
+
       cardsMenu.textContent = '';
       containerPromo.classList.add('hide');
       restaurants.classList.add('hide');
+
+      restaurantTitle.textContent = nameReg;
+      rating.textContent = stars;
+      minPrice.textContent = `Ot ${price} P`;
+      category.textContent = kitchen;
+
       menu.classList.remove('hide');
       getData(`./db/${restaurant.dataset.products}`).then(function(data) {
         data.forEach(createCardGood);
