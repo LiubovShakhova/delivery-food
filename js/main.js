@@ -224,7 +224,7 @@ inputSearch.addEventListener('keydown', function(event) {
           return item.products;
     });
         products.forEach(function(product){
-          getData('./db/${product]')
+          getData(`./db/${product}`)
           .then(function(data){
           goods.push(...data)
 
