@@ -216,6 +216,7 @@ logo.addEventListener('click', function() {
 inputSearch.addEventListener('keydown', function(event) {
     if (event.keyCode === 13) {
       const target = event.target;
+      const value = target.value;
       const goods = [];
       getData('./db/partners.json')
       .then(function(data) {
@@ -226,7 +227,11 @@ inputSearch.addEventListener('keydown', function(event) {
         products.forEach(function(product){
           getData(`./db/${product}`)
           .then(function(data){
-          goods.push(...data)
+          goods.push(...data);
+
+          const searchGoods = goods.filter(function(item){
+              return item.name.includes(value);
+          })
 
           cardsMenu.textContent = '';
           containerPromo.classList.add('hide');
@@ -236,9 +241,11 @@ inputSearch.addEventListener('keydown', function(event) {
           rating.textContent = '';
           minPrice.textContent = '';
           category.textContent = '';
+
+          return searchGoods;
           })
-          .then(function(){
-            goods.forEach(createCardGood);
+          .then(function(data){
+            data.forEach(createCardGood);
           })
         })
   }); 
