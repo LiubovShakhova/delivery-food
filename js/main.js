@@ -26,7 +26,7 @@ let login = localStorage.getItem('gloDelivery');
 //console.log(modalAuth.classList.contains('hello'))
 //modalAuth.classList.remove('modal-auth')
 const getData = async function(url) {
-    const response = await window.fetch(url);
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`Fehler ${url}, Status ${response.status}!`);
