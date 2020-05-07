@@ -20,6 +20,7 @@ const restaurantTitle = document.querySelector('.restaurant-title');
 const rating = document.querySelector('.rating');
 const minPrice = document.querySelector('.price');
 const category = document.querySelector('.category');
+const inputSearch = document.querySelector('.input-search');
 
 let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
@@ -212,13 +213,44 @@ logo.addEventListener('click', function() {
 
 }
 )
+inputSearch.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13) {
+      const target = event.target;
+      const goods = [];
+      getData('./db/partners.json')
+      .then(function(data) {
+        
+        const products = data.map(function(item) {
+          return item.products;
+    });
+        produ.forEach(function(product){
+          getData('./db/${product]')
+          .then(function(data){
+          goods.push(...data)
+
+          cardsMenu.textContent = '';
+          containerPromo.classList.add('hide');
+          restaurants.classList.add('hide');
+
+          restaurantTitle.textContent = 'Result';
+          rating.textContent = '';
+          minPrice.textContent = '';
+          category.textContent = '';
+          })
+          .then(function(){
+            goods.forEach(createCardGood);
+          })
+        })
+  }); 
+    }
+});
 
 checkAuth();
 
 new Swiper('.swiper-container', {
     loop:true,
     autoplay: {
-      delay: 3000,
+      delay: 2000,
     },
 });
 }
