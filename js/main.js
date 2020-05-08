@@ -247,7 +247,7 @@ function renderCart() {
         modalBody.insertAdjacentHTML('afterbegin', itemCart)
     })
     const totalPrice = cart.reduce(function(result, item) { 
-      return result + item.cost;
+      return result + parseFloat(item.cost);
     }, 0);
 
     modalPrice.textContent = totalPrice;
