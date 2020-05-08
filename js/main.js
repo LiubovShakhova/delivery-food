@@ -221,7 +221,7 @@ function addToCart(event) {
         title,
         cost,
         count: 1
-      })
+      });
     }
     }
   }
@@ -229,14 +229,14 @@ function addToCart(event) {
 function renderCart() {
     modalBody.textContent = '';
 
-    cart.forEach(function(item){
+    cart.forEach(function({ id, title, cost, count }){
         const itemCart = `
             <div class="food-row">
-                <span class="food-name">Ролл угорь стандарт</span>
-                <strong class="food-price">250 ₽</strong>
+                <span class="food-name">${title}</span>
+                <strong class="food-price">${cost} ₽</strong>
                 <div class="food-counter">
                     <button class="counter-button">-</button>
-                    <span class="counter">1</span>
+                    <span class="counter">${count}</span>
                     <button class="counter-button">+</button>
               </div>
             </div>
