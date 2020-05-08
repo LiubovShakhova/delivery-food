@@ -1,8 +1,8 @@
 'use strict';
 
-const cartButton = document.querySelector("#cart-button");
-const modal = document.querySelector(".modal");
-const close = document.querySelector(".close");
+const cartButton = document.querySelector('#cart-button');
+const modal = document.querySelector('.modal');
+const close = document.querySelector('.close');
 const buttonAuth = document.querySelector('.button-auth');
 const modalAuth = document.querySelector('.modal-auth');
 const closeAuth = document.querySelector('.close-auth');
@@ -74,7 +74,7 @@ function authorized() {
     buttonAuth.style.display = 'none';
     userName.style.display = 'inline';
     buttonOut.style.display = 'flex';
-    cartButton.style.display = 'flex';
+    cartButton.style.display = 'block';
     buttonOut.addEventListener('click', logOut);
 }
 
