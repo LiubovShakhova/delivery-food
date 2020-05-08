@@ -75,7 +75,7 @@ function authorized() {
     userName.style.display = 'inline';
     buttonOut.style.display = 'flex';
     cartButton.style.display = 'flex';
-    buttonOut.addEventListener('click', logOut)
+    buttonOut.addEventListener('click', logOut);
 }
 
 function notAuthorized() {
