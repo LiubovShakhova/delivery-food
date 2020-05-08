@@ -23,6 +23,7 @@ const category = document.querySelector('.category');
 const inputSearch = document.querySelector('.input-search');
 const modalBody = document.querySelector('.modal-body');
 const modalPrice = document.querySelector('.modal-pricetag');
+const buttonClearCart = document.querySelector('.clear-cart');
 
 let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
@@ -255,21 +256,23 @@ function renderCart() {
 
 function changeCount(event) {
     const target = event.target;
-    if (target.classList.contains('counter-minus')) {
-        const food = cart.find(function(item) {
-          return item.id === target.dataset.id;
-        });
-        food.count--;
-        renderCart();
-    }
 
-    if (target.classList.contains('counter-plus')) {
-        const food = cart.find(function(item) {
-          return item.id === target.dataset.id;
-        });
-        food.count++;
-        renderCart();
+    if (target.classList.contains('counter-button')) {
+      const food = cart.find(function(item) {
+        return item.id === target.dataset.id;
+      });
+      if (target.classList.contains('counter-minus')) {
+        food.count--; 
+        if (food.count === 0) {
+          cart.splice(cart.indexOf(food), 1);
+        }
+    };
+
+    if (target.classList.contains('counter-plus')) food.count++;   
+      renderCart();
     }
+  
+    
 }
 
 function init() { 
@@ -283,6 +286,10 @@ cartButton.addEventListener("click", function() {
     toggleModal();
 });
 
+buttonClearCart.addEventListener('click', function() {
+  cart.length = 0;
+  renderCart();
+})
 modalBody.addEventListener('click', changeCount);
 close.addEventListener("click", toggleModal);
 cardsMenu.addEventListener('click', addToCart);
