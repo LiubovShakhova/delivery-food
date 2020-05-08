@@ -22,6 +22,7 @@ const minPrice = document.querySelector('.price');
 const category = document.querySelector('.category');
 const inputSearch = document.querySelector('.input-search');
 const modalBody = document.querySelector('.modal-body');
+const modalPrice = document.querySelector('.modal-pricetag');
 
 let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
@@ -245,7 +246,12 @@ function renderCart() {
 
         modalBody.insertAdjacentHTML('afterbegin', itemCart)
     })
-}
+    const totalPrice = cart.reduce(function(result, item) { 
+      return result + item.cost;
+    }, 0);
+
+    modalPrice.textContent = totalPrice;
+  }
 
 function init() { 
 
