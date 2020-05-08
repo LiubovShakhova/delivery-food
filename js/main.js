@@ -26,6 +26,8 @@ let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
 //console.log(modalAuth.classList.contains('hello'))
 //modalAuth.classList.remove('modal-auth')
+const cart = [];
+
 const getData = async function(url) {
     const response = await fetch(url);
 
@@ -59,6 +61,7 @@ function authorized() {
     buttonAuth.style.display = '';
     userName.style.display = '';
     buttonOut.style.display = '';
+    cartButton.style.display = '';
     buttonOut.removeEventListener('click', logOut);
     checkAuth();
     returnMain();
@@ -70,8 +73,8 @@ function authorized() {
     //buttonAuth.style.backgroundColor = 'red';
     buttonAuth.style.display = 'none';
     userName.style.display = 'inline';
-    buttonOut.style.display = 'block';
-
+    buttonOut.style.display = 'flex';
+    cartButton.style.display = 'flex';
     buttonOut.addEventListener('click', logOut)
 }
 
@@ -153,11 +156,11 @@ function createCardGood({ description, id, image, name, price }) {
                   </div>
                 </div>
                 <div class="card-buttons">
-                  <button class="button button-primary button-add-cart">
+                  <button class="button button-primary button-add-cart" id="${id}">
                     <span class="button-card-text">В корзину</span>
                     <span class="button-cart-svg"></span>
                   </button>
-                  <strong class="card-price-bold">${price} ₽</strong>
+                  <strong class=" card-price card-price-bold">${price} ₽</strong>
                 </div>
               </div>
   `);
@@ -196,6 +199,22 @@ function openGoods(event) {
     
 }
 
+function addToCart(event) {
+    const target = event.target;
+    const buttonAddToCart = target.closest('.button-add-cart');
+    if (buttonAddToCart) {
+      const card = target.closest('.card');
+      const title = card.querySelector('.card-title-reg').textContent;
+      const cost = card.querySelector('.card-price').textContent;
+      const id = buttonAddToCart.id;
+      cart.push({
+        id: id,
+        title: title,
+        cost: cost
+      })
+    }
+  }
+
 function init() { 
 
 getData('./db/partners.json').then(function(data) {
@@ -204,7 +223,7 @@ getData('./db/partners.json').then(function(data) {
 
 cartButton.addEventListener("click", toggleModal);
 close.addEventListener("click", toggleModal);
-
+cardsMenu.addEventListener('click', addToCart);
 cardsRestaurants.addEventListener('click', openGoods);
 logo.addEventListener('click', function() {
   containerPromo.classList.remove('hide')
