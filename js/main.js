@@ -237,9 +237,9 @@ function renderCart() {
                 <span class="food-name">${title}</span>
                 <strong class="food-price">${cost}</strong>
                 <div class="food-counter">
-                    <button class="counter-button">-</button>
+                    <button class="counter-button counter-minus" data-id=${id}>-</button>
                     <span class="counter">${count}</span>
-                    <button class="counter-button">+</button>
+                    <button class="counter-button counter-plus" data-id=${id}>+</button>
               </div>
             </div>
         `;
@@ -247,11 +247,30 @@ function renderCart() {
         modalBody.insertAdjacentHTML('afterbegin', itemCart)
     })
     const totalPrice = cart.reduce(function(result, item) { 
-      return result + parseFloat(item.cost);
+      return result + (parseFloat(item.cost) * item.count);
     }, 0);
 
-    modalPrice.textContent = totalPrice;
+    modalPrice.textContent = totalPrice + 'P';
   }
+
+function changeCount(event) {
+    const target = event.target;
+    if (target.classList.contains('counter-minus')) {
+        const food = cart.find(function(item) {
+          return item.id === target.dataset.id;
+        });
+        food.count--;
+        renderCart();
+    }
+
+    if (target.classList.contains('counter-plus')) {
+        const food = cart.find(function(item) {
+          return item.id === target.dataset.id;
+        });
+        food.count++;
+        renderCart();
+    }
+}
 
 function init() { 
 
@@ -263,6 +282,8 @@ cartButton.addEventListener("click", function() {
     renderCart();
     toggleModal();
 });
+
+modalBody.addEventListener('click', changeCount);
 close.addEventListener("click", toggleModal);
 cardsMenu.addEventListener('click', addToCart);
 cardsRestaurants.addEventListener('click', openGoods);
