@@ -1,6 +1,6 @@
 'use strict';
 
-const cartButton = document.querySelector("#cart-button");
+const cartButton = document.querySelector('#cart-button');
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
 const buttonAuth = document.querySelector('.button-auth');
@@ -21,6 +21,7 @@ const rating = document.querySelector('.rating');
 const minPrice = document.querySelector('.price');
 const category = document.querySelector('.category');
 const inputSearch = document.querySelector('.input-search');
+const modalBody = document.querySelector('.modal-body');
 
 let login = localStorage.getItem('gloDelivery');
 //modalAuth.classList.add('hello')
@@ -141,7 +142,7 @@ function createCardRestaurant({ image,
       cardsRestaurants.insertAdjacentHTML('beforeend', card);
 }
 
-function createCardGood({ description, id, image, name, price }) {
+function createCardGood({ description, image, name, price, id }) {
 
   const card = document.createElement('div');
   card.className = 'card';
@@ -207,13 +208,43 @@ function addToCart(event) {
       const title = card.querySelector('.card-title-reg').textContent;
       const cost = card.querySelector('.card-price').textContent;
       const id = buttonAddToCart.id;
+
+      const food = cart.find(function() {
+        return item.id === id;
+      })
+
+      if (food) {
+        food.count += 1;
+      } else { 
       cart.push({
-        id: id,
-        title: title,
-        cost: cost
+        id,
+        title,
+        cost,
+        count: 1
       })
     }
+    }
   }
+
+function renderCart() {
+    modalBody.textContent = '';
+
+    cart.forEach(function(item){
+        const itemCart = `
+            <div class="food-row">
+                <span class="food-name">Ролл угорь стандарт</span>
+                <strong class="food-price">250 ₽</strong>
+                <div class="food-counter">
+                    <button class="counter-button">-</button>
+                    <span class="counter">1</span>
+                    <button class="counter-button">+</button>
+              </div>
+            </div>
+        `;
+
+        modalBody.insertAdjacentHTML('afterbegin', itemCart)
+    })
+}
 
 function init() { 
 
@@ -221,7 +252,10 @@ getData('./db/partners.json').then(function(data) {
     data.forEach(createCardRestaurant)
 });
 
-cartButton.addEventListener("click", toggleModal);
+cartButton.addEventListener("click", function() {
+    renderCart();
+    toggleModal();
+});
 close.addEventListener("click", toggleModal);
 cardsMenu.addEventListener('click', addToCart);
 cardsRestaurants.addEventListener('click', openGoods);
