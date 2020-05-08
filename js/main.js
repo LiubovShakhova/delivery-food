@@ -203,13 +203,14 @@ function openGoods(event) {
 function addToCart(event) {
     const target = event.target;
     const buttonAddToCart = target.closest('.button-add-cart');
+
     if (buttonAddToCart) {
       const card = target.closest('.card');
       const title = card.querySelector('.card-title-reg').textContent;
       const cost = card.querySelector('.card-price').textContent;
       const id = buttonAddToCart.id;
 
-      const food = cart.find(function() {
+      const food = cart.find(function(item) {
         return item.id === id;
       })
 
@@ -233,7 +234,7 @@ function renderCart() {
         const itemCart = `
             <div class="food-row">
                 <span class="food-name">${title}</span>
-                <strong class="food-price">${cost} ₽</strong>
+                <strong class="food-price">${cost}</strong>
                 <div class="food-counter">
                     <button class="counter-button">-</button>
                     <span class="counter">${count}</span>
