@@ -1,6 +1,6 @@
 'use strict';
 
-const cartButton = document.querySelector('#cart-button');
+const cartButton = document.querySelector('.button-cart');
 const modal = document.querySelector('.modal');
 const close = document.querySelector('.close');
 const buttonAuth = document.querySelector('.button-auth');
